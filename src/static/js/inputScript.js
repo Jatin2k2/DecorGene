@@ -30,3 +30,43 @@ function readURL(input) {
       $('.image-upload-wrap').removeClass('image-dropping');
     });
   });
+
+  function submitUpload() {
+    var fileInput = document.querySelector('.file-upload-input');
+    var file = fileInput.files[0];
+    
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
+    
+    var formData = new FormData();
+    formData.append('file', file);
+    
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error submitting image');
+      }
+    })
+    .then(data => {
+      if (data.error) {
+        console.error(data.error);
+        // Handle the error by displaying a message or taking appropriate action
+      } else {
+        console.log(data.message); // Process success response
+        window.location.href = '/getRecommendation';
+        // Add your desired logic here after the successful submission
+      }
+    })
+    .catch(error => {
+      console.error(error); // Handle error response
+      // Add your error handling logic here
+    });
+  }
+  
