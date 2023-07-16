@@ -1,0 +1,61 @@
+<!-- main.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DecorGenie Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .geneiImage {
+        max-width: 35%; /* Adjust the width as needed */
+        height: auto;
+        padding-top: 20px;
+        }
+
+        .homeIntro {
+        display: flex;
+        align-items: center;
+        }
+
+       .homeIntro p {
+        color: #343A40;
+        font-size: 17px; 
+        margin-left: 20px;
+        font-family: 'Cinzel Decorative', cursive;
+        text-align: center;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+
+    <!-- Intro -->
+    <div class="homeIntro">
+        <!-- Image -->
+        <img class="geneiImage" src="{{ url_for('static', filename='images/geneiImage.png') }}" alt="GeneiImage">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with.</p>
+    </div>
+
+    <!-- Input box -->
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <div class="file-upload">
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+    
+      <div class="image-upload-wrap">
+        <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+        <div class="drag-text">
+          <h3>Drag and drop a file or select add Image</h3>
+        </div>
+      </div>
+      <div class="file-upload-content">
+        <img class="file-upload-image" src="#" alt="your image" />
+        <div class="image-title-wrap">
+          <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+          <button type="button" onclick="submitUpload()" class="submit-image">Submit <span class="image-title">Uploaded Image</span></button>
+        </div>
+      </div>
+    </div>
+    <!-- Not declared the submitUpload function yet -->
+    <script src="{{ url_for('static', filename='js/inputScript.js') }}"></script>
+</body>
+</html>
