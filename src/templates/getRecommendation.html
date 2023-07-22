@@ -30,8 +30,18 @@
     </style>
 </head>
 <body>
+  <div data-role="page" id="recommendation" data-url="{{ url_for('getRecommendation') }}"></div>
     {% include 'navbar.html' %}
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <!-- Input box -->
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
