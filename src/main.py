@@ -8,6 +8,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.debug = True
 app.jinja_env.auto_reload = True
 app.secret_key = secrets.token_hex(16)
 """
@@ -16,9 +17,17 @@ def home():
     return render_template("home.html")
 """
 
+@app.route("/wishes")
+def wishes():
+    return render_template("wishes.html")
+
 @app.route("/getRecommendation")
 def getRecommendation():
     return render_template("getRecommendation.html")
+
+@app.route("/theGenie")
+def theGenie():
+    return render_template("theGenie.html")
 
 @app.route("/about")
 def about():
