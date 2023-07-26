@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishes</title>
+    <style>
+        .button-div{
+            margin-top: 7%;
+            padding: 10px;
+            margin-left: 15px;
+            margin-right: 15px;
+            background-color: #014893;
+        }
+
+        .justify-content-between h5 {
+            font-family: 'Cinzel Decorative', cursive;
+       }
+
+       .list-group-item-action p{
+           font-family: 'Cinzel Decorative', cursive;
+       }
+       .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="list-group button-div">
+            <a href="/getRecommendation" class="list-group-item list-group-item-action text-center alinkclass" style="background-color: #007BFF; margin-left: 5px; color: aliceblue;" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Wish 1.</h5>
+                </div>
+                <p class="mb-1">Unveil the Perfect Decor with Decorgennie's Magic!</p>
+              </a>
+            <a href="#" class="list-group-item list-group-item-action text-center" style="background-color: #007BFF; margin-left: 5px; color: aliceblue;" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Wish 2.</h5>
+                </div>
+                <p class="mb-1">Unlock Endless Possibilities with Decorgennie's Tailored Recommendations!</p>
+              </a>
+            <a href="/theGenie" class="list-group-item list-group-item-action text-center" style="background-color: #007BFF; margin-left: 5px; color: aliceblue;"  aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Wish 3.</h5>
+                </div>
+                <p class="mb-1">Enlightenment awaits! Pose Your Design Questions to Decorgennie!
+                </p>
+              </a>
+      </div>
+
+</body>
+</html>
