@@ -60,7 +60,7 @@ function readURL(input) {
         // Handle the error by displaying a message or taking appropriate action
       } else {
         console.log(data.message); // Process success response
-        window.location.href = '/getRecommendation';
+        window.location.href = '/wishes';
         // Add your desired logic here after the successful submission
       }
     })
