@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 import secrets
 import requests
+import openai
 from bs4 import BeautifulSoup
 
 UPLOAD_FOLDER = 'uploads'
@@ -39,8 +40,26 @@ def scrape_products():#search_query):
 
 
     return products
+# The chatbot
+# openai.api_key = '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'
 
-
+# @app.route('/send-message', methods=['POST'])
+# def send_message():
+#     user_input = request.form.get('user_input')
+    
+#     # Add user message to chat history
+#     chat_history = [{'role': 'user', 'content': user_input}]
+    
+#     # Call OpenAI API
+#     response = openai.Completion.create(
+#         engine="davinci", # Use the appropriate engine
+#         prompt=chat_history,
+#         max_tokens=50  # Adjust as needed
+#     )
+    
+#     bot_reply = response.choices[0].text.strip()
+    
+#     return jsonify({'bot_reply': bot_reply})
 
 @app.route("/wishes")
 def wishes():
@@ -51,6 +70,10 @@ def getRecommendation():
     products = scrape_products()
 
     return render_template("getRecommendation.html",products=products)
+
+@app.route("/wish2")
+def wish2():
+    return render_template("wish2.html")
 
 @app.route("/theGenie")
 def theGenie():
