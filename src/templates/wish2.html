@@ -3,9 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Simple Search Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Cinzel Decorative', cursive;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #222;
+    }
+
+    .search-container {
+        text-align: center;
+        padding: 20px;
+        background-color: #014893;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #f4f4f4;
+        color: #333;
+        outline: none;
+        transition: box-shadow 0.3s, color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+        color: #000;
+    }
+
+    input[type="submit"] {
+        margin-top: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        .product-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #014893;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            width: 180px;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-name {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .product-price {
+            margin-top: 5px;
+            color: #ccc;
+        }
+    </style>
 </head>
 <body>
-    {% include 'navbar.html' %}
+  <div class="search-container">
+    <h2>Search You Preference</h2>
+    <form action="/wish2" method="POST">
+        <div class="search-box">
+            <input type="text" name="query" placeholder="Enter your search query" required>
+            <input type="submit" value="Search">
+        </div>
+    </form>
+</div>
+    <div class="product-cards">
+        {% for product in products %}
+            <div class="product-card">
+                <img class="product-image" src="{{ product.image }}" alt="{{ product.name }}">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-price">{{ product.price }}</p>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

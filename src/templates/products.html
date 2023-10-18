@@ -1,0 +1,13 @@
+<h2>Products Included !!</h2>
+
+<turbo-frame id="new_products">
+<div class="product-cards">
+    {% for product in products %}
+        <div class="product-card">
+            <img class="product-image" src="{{ product.image }}" alt="{{ product.name }}">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-price">{{ product.price }}</p>
+        </div>
+    {% endfor %}
+</div>
+</turbo-frame>

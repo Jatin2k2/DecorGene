@@ -15,6 +15,17 @@ function readURL(input) {
     }
   }
 
+
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+  
   function removeUpload() {
     $('.file-upload-input').replaceWith($('.file-upload-input').clone());
     $('.file-upload-content').hide();
@@ -48,25 +59,11 @@ function readURL(input) {
       body: formData
     })
     .then(response => {
-      if (response.ok) {
-        return response.json();
+      if (response.redirected) {
+        window.location = response.url
       } else {
         throw new Error('Error submitting image');
       }
-    })
-    .then(data => {
-      if (data.error) {
-        console.error(data.error);
-        // Handle the error by displaying a message or taking appropriate action
-      } else {
-        console.log(data.message); // Process success response
-        window.location.href = '/wishes';
-        // Add your desired logic here after the successful submission
-      }
-    })
-    .catch(error => {
-      console.error(error); // Handle error response
-      // Add your error handling logic here
     });
   }
   
