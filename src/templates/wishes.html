@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cinzel Decorative', cursive;
+            background-color: #222;
+            margin: 0;
+            padding: 0;
+            color: #ccc;
+        }
+
+        .button-div {
+            margin-top: 7%;
+            padding: 10px;
+            margin-left: 15px;
+            margin-right: 15px;
+            background-color: #014893;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-div a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .button-div a:hover {
+            background-color: #007BFF;
+            transform: scale(1.02) rotate(-2deg);
+        }
+
+        .justify-content-between h5 {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .list-group-item-action p {
+            color: #ddd;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .alinkclass {
+            text-decoration: none;
+        }
+
+        .alinkclass:hover {
+            background-color: #007BFF;
+        }
+
+        .navbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="list-group button-div">
+        <a href="/getRecommendation" class="list-group-item list-group-item-action text-center alinkclass" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Wish 1.</h5>
+            </div>
+            <p class="mb-1">Unveil the Perfect Decor with Decorgenie's Magic!</p>
+        </a>
+        <a href="/wish2" class="list-group-item list-group-item-action text-center alinkclass" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Wish 2.</h5>
+            </div>
+            <p class="mb-1">Unlock Endless Possibilities with Decorgenie's Tailored Recommendations!</p>
+        </a>
+        <a href="/theGenie" class="list-group-item list-group-item-action text-center alinkclass" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Wish 3.</h5>
+            </div>
+            <p class="mb-1">Enlightenment awaits! Pose Your Design Questions to Decorgenie!</p>
+        </a>
+    </div>
+</body>
+</html>

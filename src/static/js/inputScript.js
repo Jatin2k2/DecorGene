@@ -15,6 +15,17 @@ function readURL(input) {
     }
   }
 
+
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+  
   function removeUpload() {
     $('.file-upload-input').replaceWith($('.file-upload-input').clone());
     $('.file-upload-content').hide();
@@ -30,3 +41,29 @@ function readURL(input) {
       $('.image-upload-wrap').removeClass('image-dropping');
     });
   });
+
+  function submitUpload() {
+    var fileInput = document.querySelector('.file-upload-input');
+    var file = fileInput.files[0];
+    
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
+    
+    var formData = new FormData();
+    formData.append('file', file);
+    
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.redirected) {
+        window.location = response.url
+      } else {
+        throw new Error('Error submitting image');
+      }
+    });
+  }
+  

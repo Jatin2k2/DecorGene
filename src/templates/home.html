@@ -1,48 +1,139 @@
-<!-- main.html -->
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>DecorGenie Home</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-    <style>
-        .geneiImage {
-        max-width: 35%; /* Adjust the width as needed */
-        height: auto;
-        padding-top: 20px;
-        }
+  <title>DecorGenie Home</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cinzel Decorative', cursive;
+      background-color: #222;
+      margin: 0;
+      padding: 0;
+      color: #ccc;
+    }
 
-        .homeIntro {
-        display: flex;
-        align-items: center;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px;
+      box-sizing: border-box;
+    }
 
-       .homeIntro p {
-        color: #343A40;
-        font-size: 17px; 
-        margin-left: 20px;
-        font-family: 'Cinzel Decorative', cursive;
-        text-align: center;
-        }
-    </style>
+    .homeIntro {
+      display: flex;
+      align-items: center;
+      background-color: #333;
+      border-radius: 10px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    .geneiImage {
+      max-width: 35%;
+      height: auto;
+    }
+
+    .homeIntro p {
+      font-size: 16px;
+      text-align: justify;
+      margin-left: 40px;
+    }
+
+    .file-upload {
+      text-align: center;
+      background-color: #333;
+      border-radius: 10px;
+      padding: 40px;
+    }
+
+    .file-upload-btn {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .file-upload-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .image-upload-wrap {
+      margin-top: 20px;
+      border: 2px dashed #555;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .drag-text {
+      padding: 20px;
+    }
+
+    .file-upload-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-upload-content {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .file-upload-image {
+      max-height: 200px;
+      margin: auto;
+    }
+
+    .image-title-wrap {
+      margin: 20px 0;
+    }
+
+    .remove-image,
+    .submit-image {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 10px;
+      transition: background-color 0.3s;
+    }
+
+    .remove-image:hover,
+    .submit-image:hover {
+      background-color: #c0392b;
+    }
+  </style>
 </head>
+
 <body>
-    {% include 'navbar.html' %}
-
-
+  <div class="container">
     <!-- Intro -->
     <div class="homeIntro">
-        <!-- Image -->
-        <img class="geneiImage" src="{{ url_for('static', filename='images/geneiImage.png') }}" alt="GeneiImage">
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with.</p>
+      <img class="geneiImage" src="{{ url_for('static', filename='images/geneiImage.png') }}" alt="GeneiImage">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+        industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with.</p>
     </div>
 
     <!-- Input box -->
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
-      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
-    
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">Add
+        Image</button>
       <div class="image-upload-wrap">
-        <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+        <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" />
         <div class="drag-text">
           <h3>Drag and drop a file or select add Image</h3>
         </div>
@@ -50,12 +141,16 @@
       <div class="file-upload-content">
         <img class="file-upload-image" src="#" alt="your image" />
         <div class="image-title-wrap">
-          <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-          <button type="button" onclick="submitUpload()" class="submit-image">Submit <span class="image-title">Uploaded Image</span></button>
+          <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
+              class="image-title">Uploaded Image</span></button>
+          <button type="button" onclick="submitUpload()" class="submit-image">Submit <span
+              class="image-title">Uploaded Image</span></button>
         </div>
       </div>
     </div>
-    <!-- Not declared the submitUpload function yet -->
-    <script src="{{ url_for('static', filename='js/inputScript.js') }}"></script>
+  </div>
+  <!-- Not declared the submitUpload function yet -->
+  <script src="{{ url_for('static', filename='js/inputScript.js') }}"></script>
 </body>
+
 </html>
