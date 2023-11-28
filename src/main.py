@@ -2,42 +2,21 @@ from flask import *
 from werkzeug.utils import secure_filename
 import os
 import secrets
-import requests
-from bs4 import BeautifulSoup
-import base64
-import urllib
 import uuid
-from flask import make_response
-
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from keras.models import model_from_json
-from tensorflow.keras.applications.vgg16 import preprocess_input
-import json
-import numpy as np
-
+import time
 
 import sqlite3
+
+if os.path.exists("database.db"):
+    os.remove("database.db")
 conn = sqlite3.connect('database.db')
 conn.execute('CREATE TABLE tokens (token TEXT, Imgpath TEXT)')
 conn.close()
 
+from model.load import *
+from helperFunctions.chatBOT import *
+from helperFunctions.productScrape import *
 
-
-
-with open('C:\\Users\\amrit\\Documents\\CapStone\\DecorGene\\src\\model\\model.json', 'r') as f:
-    model_json = f.read()
-
-MLmodel = model_from_json(model_json)
-MLmodel.load_weights("C:\\Users\\amrit\\Documents\\CapStone\\DecorGene\\src\\model\\interior_design_model.h5")
-MLmodel.compile(optimizer=Adam(lr=0.00001), loss='categorical_crossentropy', metrics=['accuracy'])
-
-
-
-tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
-model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -72,64 +51,11 @@ app.secret_key = secrets.token_hex(16)
 
 
 
-
 @app.route("/get", methods=["GET", "POST"])
 def chat():
     msg = request.form["msg"]
     input = msg
     return get_Chat_response(input)
-
-
-def get_Chat_response(text):
-
-    # Let's chat for 5 lines
-    for step in range(5):
-        # encode the new user input, add the eos_token and return a tensor in Pytorch
-        new_user_input_ids = tokenizer.encode(str(text) + tokenizer.eos_token, return_tensors='pt')
-
-        # append the new user input tokens to the chat history
-        bot_input_ids = torch.cat([chat_history_ids, new_user_input_ids], dim=-1) if step > 0 else new_user_input_ids
-
-        # generated a response while limiting the total chat history to 1000 tokens, 
-        chat_history_ids = model.generate(bot_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
-
-        # pretty print last ouput tokens from bot
-        return tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
-
-
-
-def scrape_products(search_query="bedroom lamps"):
-    base_url = 'https://www.pepperfry.com/site_product/search?q={}'.format(urllib.parse.quote(search_query,safe=''))
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
-
-    response = requests.get(base_url, headers=headers)
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    products = []
-    for product_card in soup.find_all('div', class_='product-card'):
-        name = product_card.find('h3', class_='product-name').text.strip()
-        price = product_card.find('span', class_='product-offer-price').text.strip()
-        image = product_card.find('img')['src']
-
-        products.append({
-            'name': name,
-            'price': price,
-            'image': image
-        })
-
-    return products
-
-
-def predict(img_path):
-    image = load_img(img_path, target_size=(224, 224))
-    image_data = img_to_array(image)
-    preprocessed_image_data = np.expand_dims(image_data, axis=0)
-    preprocessed_image_data = preprocess_input(preprocessed_image_data)
-    prediction = MLmodel.predict(preprocessed_image_data)
-    class_label = np.argmax(prediction)
-    return class_label
-
 
 @app.route('/uploads/<path:name>')
 def uploads(name):
@@ -199,7 +125,9 @@ def home():
     
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-        
+
+            filename = str(time.time()) + "_" + filename
+
             upload_folder = app.config['UPLOAD_FOLDER']
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
