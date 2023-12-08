@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Search Page</title>
+    <title>Search Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
       body {
         font-family: 'Cinzel Decorative', cursive;
@@ -15,14 +17,17 @@
         align-items: center;
         min-height: 100vh;
         background-color: #222;
+        overflow-x: hidden;
+        background: linear-gradient(to right, rgb(38, 51, 61), rgb(50, 55, 65), rgb(33, 33, 78));
     }
 
     .search-container {
+        width: 50%;
+        margin-top: 5%;
         text-align: center;
-        padding: 20px;
-        background-color: #014893;
+        padding: 40px;
+        background-color: #007BFF;
         border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         color: #fff;
         margin-bottom: 20px;
     }
@@ -32,6 +37,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        margin-top: 10px; /* Added margin-top */
     }
 
     input[type="text"] {
@@ -46,63 +52,60 @@
         transition: box-shadow 0.3s, color 0.3s;
     }
 
-    input[type="text"]:focus {
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
-        color: #000;
-    }
-
     input[type="submit"] {
-        margin-top: 10px;
-        background-color: #007bff;
+        margin-left: 5px;
+        background-color: #222;
         color: white;
-        border: none;
+        border: solid;
+        border-color: #fff;
         border-radius: 5px;
         padding: 10px 20px;
         cursor: pointer;
         font-size: 16px;
     }
 
-        .product-cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
+    .button-container {
+        width: 100%;
+        display: flex;
+        margin-top: 30px;
+        margin-left: 50%;
+    }
 
-        .product-card {
-            background-color: #014893;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            color: #fff;
-            width: 180px;
-            transition: transform 0.3s;
-        }
+    .btn-customize {
+        font-size: 1rem;
+        transition: transform 0.3s;
+        color: #fff;
+        border: solid;
+        border-radius: 4px;
+        border-color: #007BFF;
+    }
 
-        .product-card:hover {
-            transform: scale(1.05);
-        }
+    .btn-customize:hover {
+        transform: scale(1.1);
+        color: #014893;
+        background-color: #fff;
+    }
 
-        .product-card .product-image {
-            max-width: 100%;
-            height: auto;
-        }
 
-        .product-name {
-            margin-top: 10px;
-            font-size: 1rem;
-        }
+    @media only screen and (max-width: 600px) {
+    .search-container {
+        width: 80%; /* Adjust the width as needed for smaller screens */
+        margin-top: 10%;
+    }
 
-        .product-price {
-            margin-top: 5px;
-            color: #ccc;
-        }
+    .button-container {
+        margin-left: 0;
+    }
+}
+
     </style>
 </head>
 <body>
+    <div class="button-container">
+        <a href="/" class="btn btn-customize">Home</a>
+    </div>  
   <div class="search-container">
-    <h2>Search You Preference</h2>
+    <h2>Personalize Your Perfect Space</h2>
     <form action="/wish2" method="POST">
         <div class="search-box">
             <input type="text" name="query" placeholder="Enter your search query" required>
@@ -112,11 +115,13 @@
 </div>
     <div class="product-cards">
         {% for product in products %}
+        <a href="https://www.amazon.in/" target="_blank">
             <div class="product-card">
                 <img class="product-image" src="{{ product.image }}" alt="{{ product.name }}">
                 <h3 class="product-name">{{ product.name }}</h3>
                 <p class="product-price">{{ product.price }}</p>
             </div>
+        </a>
         {% endfor %}
     </div>
 </body>

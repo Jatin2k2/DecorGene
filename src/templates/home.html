@@ -7,11 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Cinzel Decorative', cursive;
-      background-color: #222;
+      font-family: 'Cinzel Decorative';
       margin: 0;
       padding: 0;
-      color: #ccc;
+      color: #fff;
+      background: linear-gradient(to right, rgb(38, 51, 61), rgb(50, 55, 65), rgb(33, 33, 78));
+      overflow-x: hidden;
     }
 
     .container {
@@ -21,10 +22,16 @@
       box-sizing: border-box;
     }
 
+    .heading-text { 
+      margin-bottom: 20px; /* Add margin to separate from homeIntro */
+      position: relative;
+
+    }
+
     .homeIntro {
       display: flex;
       align-items: center;
-      background-color: #333;
+      background-color: #222;
       border-radius: 10px;
       padding: 40px;
       margin-bottom: 40px;
@@ -33,6 +40,7 @@
     .geneiImage {
       max-width: 35%;
       height: auto;
+      margin-right: 20px; /* Add margin to separate from text */
     }
 
     .homeIntro p {
@@ -43,13 +51,13 @@
 
     .file-upload {
       text-align: center;
-      background-color: #333;
+      background-color: #222;
       border-radius: 10px;
       padding: 40px;
     }
 
     .file-upload-btn {
-      background-color: #3498db;
+      background-color: #007BFF;
       color: #fff;
       border: none;
       padding: 10px 20px;
@@ -58,20 +66,12 @@
       transition: background-color 0.3s;
     }
 
-    .file-upload-btn:hover {
-      background-color: #2980b9;
-    }
-
     .image-upload-wrap {
       margin-top: 20px;
-      border: 2px dashed #555;
+      border: 2px solid #fff;
       border-radius: 5px;
       padding: 20px;
       text-align: center;
-    }
-
-    .drag-text {
-      padding: 20px;
     }
 
     .file-upload-input {
@@ -97,45 +97,56 @@
       margin: 20px 0;
     }
 
-    .remove-image,
-    .submit-image {
-      background-color: #e74c3c;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 0 10px;
-      transition: background-color 0.3s;
-    }
-
     .remove-image:hover,
     .submit-image:hover {
-      background-color: #c0392b;
+      background-color: #342d2c;
     }
+
+    .gradient-text1 {
+      font-weight: bold;
+      color: #095b9a; /* Set the color based on the starting gradient color */
+    }
+
+    .gradient-text2 {
+      font-weight: bold;
+      color: #7070a0;
+    }
+
+    
   </style>
 </head>
 
 <body>
   <div class="container">
     <!-- Intro -->
+    <div class="heading-text">
+      <h1>DecorGenie : Personalize AI Home Decor Assistant</h1>
+      <h2>Capstone Project ( CPG NO : 20 )</h2>
+    </div>
     <div class="homeIntro">
       <img class="geneiImage" src="{{ url_for('static', filename='images/geneiImage.png') }}" alt="GeneiImage">
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-        industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with.</p>
-    </div>
+      <article>
+        <p class="gradient-text1">The DecorGenie project aims to address the challenge of providing personalized interior decor recommendations
+            and visualization to users based on their uploaded room images.</p>
+
+        <p>Many individuals struggle with selecting the right decor styles and products that match their preferences and
+            room aesthetics. Traditional methods of browsing through countless options on various e-commerce websites can
+            be time-consuming and overwhelming.</p>
+
+        <p class="gradient-text2">DecorGenie seeks to leverage the power of machine learning and web scripting to automate and enhance this
+            process, providing users with tailored decor suggestions and a seamless visualization experience.</p>
+    </article>
+  </div>
 
     <!-- Input box -->
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
-      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">Add
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">Upload
         Image</button>
       <div class="image-upload-wrap">
         <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" />
         <div class="drag-text">
-          <h3>Drag and drop a file or select add Image</h3>
+          <h3>Rub the lamp, Upload an Image and Watch DecorGenie Work its Magic!</h3>
         </div>
       </div>
       <div class="file-upload-content">

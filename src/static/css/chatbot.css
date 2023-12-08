@@ -1,8 +1,8 @@
 body,html{
+	font-family: 'Cinzel Decorative', cursive;
 	height: 100%;
 	margin: 0;
-	background: rgb(5, 5, 5);
-   background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43));
+	overflow-x: hidden;
 	background: linear-gradient(to right, rgb(38, 51, 61), rgb(50, 55, 65), rgb(33, 33, 78));
 }
 
@@ -217,6 +217,53 @@ border-radius: 0 0 15px 15px !important;
 	cursor: pointer;
 	background-color: rgba(0,0,0,0.2);
 }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .button-container {
+			width: 100%;
+			display: flex;
+			justify-content: center; /* Center the items horizontally */
+			margin-top: 30px;
+			margin-left: 0; /* Remove the margin-left or set it to auto */
+		}
+		
+
+        .btn-customize {
+            font-size: 1rem;
+            transition: transform 0.3s;
+            color: #fff;
+            border: solid;
+            border-radius: 4px;
+            border-color: #007BFF;
+        }
+
+        .btn-customize:hover {
+            transform: scale(1.1);
+            color: #014893;
+            background-color: #fff;
+        }
+
+        .container-fluid {
+            height: 100vh;
+			margin-top: 15px;
+        }
+
+        .chat {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .msg_card_body {
+            overflow-y: auto;
+        }
+
+        .msg_card {
+            height: calc(100% - 50px);
+            overflow: hidden;
+        }
 @media(max-width: 576px){
 	.contacts_card{
 	margin-bottom: 15px !important;
