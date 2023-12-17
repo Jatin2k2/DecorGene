@@ -10,7 +10,7 @@ import sqlite3
 if os.path.exists("database.db"):
     os.remove("database.db")
 conn = sqlite3.connect('database.db')
-conn.execute('CREATE TABLE tokens (token TEXT, Imgpath TEXT)')
+conn.execute('CREATE TABLE tokens (token TEXT, Imgpath TEXT,class TEXT)')
 conn.close()
 
 from model.load import *
@@ -20,28 +20,7 @@ from helperFunctions.productScrape import *
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-classes_ML = [
-    "natural_bedroom",
-    "natural_dining_room",
-    "natural_kitchen",
-    "natural_living_room",
-    "natural_bathroom",
-    "classic_bedroom",
-    "classic_dining_room",
-    "classic_kitchen",
-    "classic_living_room",
-    "classic_bathroom",
-    "casual_bedroom",
-    "casual_dining_room",
-    "casual_kitchen",
-    "casual_living_room",
-    "casual_bathroom",
-    "modern_bedroom",
-    "modern_dining_room",
-    "modern_kitchen",
-    "modern_living_room",
-    "modern_bathroom"
-]
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -79,11 +58,12 @@ def getRecommendation():
     else:
         ImgpathUser = row['Imgpath']
 
-    imageClass = predict(ImgpathUser)
-    parameterProduct = classes_ML[imageClass].replace("_"," ").replace("-"," ")
+    parameterProduct = predict(ImgpathUser)
+    con.execute("UPDATE tokens SET class = ? WHERE token = ?",(parameterProduct,str(cookieVal),))
     print("[+] ==>",parameterProduct)
     products = scrape_products(parameterProduct)
-    return render_template("getRecommendation.html",products=products)
+    if products != None:
+        return render_template("getRecommendation.html",products=products)
 
 @app.route("/wish2",methods=['GET','POST'])
 def wish2():
@@ -138,7 +118,7 @@ def home():
 
                 with sqlite3.connect("database.db") as con:
                     cur = con.cursor()
-                    cur.execute("INSERT INTO tokens (token,Imgpath) VALUES (?,?)",(unique_cookie_value,str(full_Path)))
+                    cur.execute("INSERT INTO tokens (token,Imgpath,class) VALUES (?,?,?)",(unique_cookie_value,str(full_Path),"None"))
                     con.commit()
                 res = make_response(redirect(url_for('wishes')))
                 res.set_cookie('unique_cookie', unique_cookie_value)

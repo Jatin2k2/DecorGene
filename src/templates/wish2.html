@@ -115,7 +115,7 @@
 </div>
     <div class="product-cards">
         {% for product in products %}
-        <a href="https://www.amazon.in/" target="_blank">
+        <a href="{{ product.link }}" target="_blank">
             <div class="product-card">
                 <img class="product-image" src="{{ product.image }}" alt="{{ product.name }}">
                 <h3 class="product-name">{{ product.name }}</h3>
