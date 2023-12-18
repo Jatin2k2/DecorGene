@@ -5,14 +5,6 @@ import secrets
 import uuid
 import time
 
-import sqlite3
-
-if os.path.exists("database.db"):
-    os.remove("database.db")
-conn = sqlite3.connect('database.db')
-conn.execute('CREATE TABLE tokens (token TEXT, Imgpath TEXT,class TEXT)')
-conn.close()
-
 from model.load import *
 from helperFunctions.chatBOT import *
 from helperFunctions.productScrape import *
@@ -22,12 +14,21 @@ UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
+import sqlite3
+
+if os.path.exists("database.db"):
+    os.remove("database.db")
+conn = sqlite3.connect('database.db')
+conn.execute('CREATE TABLE tokens (token TEXT, Imgpath TEXT, class TEXT)')
+conn.close()
+
+
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.debug = True
 app.jinja_env.auto_reload = True
 app.secret_key = secrets.token_hex(16)
-
 
 
 @app.route("/get", methods=["GET", "POST"])
@@ -48,19 +49,22 @@ def wishes():
 def getRecommendation():
 
     cookieVal = request.cookies.get('unique_cookie')
-    con = sqlite3.connect("database.db")
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    cur.execute("SELECT Imgpath FROM tokens WHERE token = ?",(str(cookieVal),))
-    row = cur.fetchone()
-    if row is None:
-        pass
-    else:
-        ImgpathUser = row['Imgpath']
 
-    parameterProduct = predict(ImgpathUser)
-    con.execute("UPDATE tokens SET class = ? WHERE token = ?",(parameterProduct,str(cookieVal),))
+    with sqlite3.connect("database.db") as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("SELECT Imgpath FROM tokens WHERE token = ?",(str(cookieVal),))
+
+        row = cur.fetchone()
+        if row is None:
+            pass
+        else:
+            ImgpathUser = row['Imgpath']
+        parameterProduct = predict(ImgpathUser)
+        con.execute("UPDATE tokens SET class = ? WHERE token = ?",(parameterProduct,str(cookieVal),))
+        
     print("[+] ==>",parameterProduct)
+
     products = scrape_products(parameterProduct)
     if products != None:
         return render_template("getRecommendation.html",products=products)
@@ -68,8 +72,21 @@ def getRecommendation():
 @app.route("/wish2",methods=['GET','POST'])
 def wish2():
     if request.method == 'POST':
+        cookieVal = request.cookies.get('unique_cookie')
         query = request.form.get("query")
-        products = scrape_products(query)
+
+        with sqlite3.connect("database.db") as con:
+            con.row_factory = sqlite3.Row
+            cur = con.cursor()
+            cur.execute("SELECT class FROM tokens WHERE token = ?",(str(cookieVal),))
+
+            row = cur.fetchone()
+            if row is None:
+                pass
+            else:
+                imgClass = row['class']
+
+        products = scrape_products(query + " " + imgClass.split(" ")[1])
         response = make_response(render_template("wish2.html",products=products))
         response.headers["Cache-Control"] = "no-store"
         return response
@@ -120,6 +137,7 @@ def home():
                     cur = con.cursor()
                     cur.execute("INSERT INTO tokens (token,Imgpath,class) VALUES (?,?,?)",(unique_cookie_value,str(full_Path),"None"))
                     con.commit()
+                
                 res = make_response(redirect(url_for('wishes')))
                 res.set_cookie('unique_cookie', unique_cookie_value)
                 return res

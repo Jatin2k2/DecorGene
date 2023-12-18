@@ -3,4 +3,3 @@ requests
 tensorflow
 keras
 transformers
-#torch
